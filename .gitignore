@@ -1,0 +1,36 @@
+# --- data: not shared; download from the sources listed in README ---
+data/
+*.rar
+*.zip
+
+# --- model weights (Ultralytics AGPL-3.0 derivatives; shared on request) ---
+*.pt
+weights/
+
+# --- sample image grids written by Ultralytics (contain dataset images) ---
+runs/**/train_batch*.jpg
+runs/**/val_batch*.jpg
+
+# --- smoke-test runs ---
+runs/*_smoke/
+runs/*_smoke_test/
+
+# --- environment / caches ---
+skin/
+__pycache__/
+*.pyc
+.venv/
+
+# --- logs ---
+logs/
+
+# --- editor / tool state ---
+.claude/
+.serena/
+.vscode/
+.idea/
+
+# --- misc ---
+_nul
+Thumbs.db
+desktop.ini

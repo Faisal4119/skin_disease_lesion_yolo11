@@ -1,0 +1,15 @@
+{
+  "task": "malignancy",
+  "model": "yolo11s-cls.pt",
+  "epochs": 40,
+  "imgsz": 320,
+  "smoke": false,
+  "train_minutes": 135.1,
+  "test_top1": 0.9203599691390991,
+  "test_top5": 1.0,
+  "classes": [
+    "benign",
+    "malignant",
+    "non-neoplastic"
+  ]
+}
