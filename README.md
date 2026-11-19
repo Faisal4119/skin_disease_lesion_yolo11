@@ -24,6 +24,51 @@ than a false alarm.
 The test split shares no patient or lesion with train or val, and near-duplicates were removed
 before splitting. Per-class figures are in `runs/interim_metrics_2026-09-20.json`.
 
+### Model B — malignancy, per class
+
+| Class | Precision | Recall | F1 | Test images |
+|---|---|---|---|---|
+| non-neoplastic | 0.945 | 0.974 | 0.959 | 3,349 |
+| malignant | 0.860 | **0.809** | 0.834 | 593 |
+| benign | 0.802 | 0.692 | 0.743 | 503 |
+
+Of the malignant test images, 81% are predicted malignant, 13% non-neoplastic and 6% benign.
+
+<p align="center">
+  <img src="runs/malignancy_test/confusion_matrix_normalized.png" width="520" alt="Model B normalized confusion matrix on the test set">
+</p>
+
+### Model A — disease, best and worst classes
+
+| Best classes | F1 | | Worst classes | F1 |
+|---|---|---|---|---|
+| nail disease | 0.924 | | contact dermatitis | 0.295 |
+| hair disease | 0.840 | | bacterial infection | 0.358 |
+| seborrheic keratosis / benign tumor | 0.783 | | trauma / scar / bruise | 0.433 |
+| basal cell carcinoma | 0.777 | | exanthem / drug eruption | 0.436 |
+| acne / rosacea | 0.740 | | granulomatous disorder | 0.465 |
+
+Errors follow visual similarity, not sample count. Contact dermatitis, eczema and bacterial
+infection look alike in photos, so the model confuses them even though each has plenty of images.
+
+**Melanoma:** 22 of 32 test images correct (recall 0.688). Of the 10 misses, 7 went to benign
+classes (4 nevus, 3 seborrheic keratosis) and 2 to other malignant classes, which the OR rule still
+flags as cancer.
+
+<p align="center">
+  <img src="runs/disease_test/confusion_matrix_normalized.png" width="720" alt="Model A normalized confusion matrix on the test set">
+</p>
+
+### Training curves
+
+| Model A · disease | Model B · malignancy |
+|---|---|
+| <img src="runs/disease/results.png" width="400" alt="Model A training curves"> | <img src="runs/malignancy/results.png" width="400" alt="Model B training curves"> |
+
+Best validation top-1: 65.5% at epoch 49 (A) and 92.0% at epoch 34 (B). Validation loss is lowest
+around epoch 11 (A) and 15 (B) and then rises while accuracy still improves slightly, a sign of
+over-confidence worth addressing with calibration or fewer epochs.
+
 The full write-up, with charts and sample images, is in
 [`doc/Skin_Lesion_YOLO11_Project_Report.pptx`](doc/Skin_Lesion_YOLO11_Project_Report.pptx).
 
